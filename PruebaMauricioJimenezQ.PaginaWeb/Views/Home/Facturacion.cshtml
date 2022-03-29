@@ -1,0 +1,159 @@
+﻿@{
+    ViewBag.Title = "Facturación";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+
+<br>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <input type="hidden" id="hfRowIndex" value="" />
+    <h3>Para crear una factura, primero elija un cliente:</h3>
+    <table class="table">
+        <tr>
+            <td>
+                Detalles del cliente
+                <select id="slcClientes">
+                    <option disabled selected> -- Seleccione un cliente -- </option>
+                    @for (int i = 0; i < ViewBag.ConteoClientes; i++)
+                    {
+                        <option value="@Html.Raw(ViewBag.DatosClientes[i].ClienteId)">Código @Html.Raw(ViewBag.DatosClientes[i].Codigo). @Html.Raw(ViewBag.DatosClientes[i].Nombre)</option>
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type='button' id='btnCrear'>Crear</button>
+            </td>
+        </tr>
+    </table>
+
+    <input id="txtBusquedaFacturas" type="text" placeholder="Buscar..">
+    <table id="tblFacturas" class="table">
+        <thead>
+            <tr>
+                <th hidden>FacturaId</th>
+                <th>Nombre del cliente</th>
+                <th>Consecutivo</th>
+                <th>TotalFactura ₡</th>
+                <th>Factura pagada</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="tbodyFacturas">
+            @for (int i = 0; i < ViewBag.ConteoFacturas; i++)
+            {
+            <tr>
+                <td hidden>@Html.Raw(ViewBag.DatosFacturas[i].FacturaId)</td>
+                <td hidden>@Html.Raw(ViewBag.DatosFacturas[i].ClienteId)</td>
+                <td>@Html.Raw(ViewBag.DatosFacturas[i].NombreCliente)</td>
+                <td>@Html.Raw(ViewBag.DatosFacturas[i].Consecutivo)</td>
+                <td>@Html.Raw(ViewBag.DatosFacturas[i].TotalFactura)</td>
+                <td>@Html.Raw(ViewBag.DatosFacturas[i].Pago)</td>
+                <td>
+                    <button class="show" href="JavaScript:void(0);"><i class="glyphicon glyphicon-search"></i>Ver detalle</button>
+                </td>
+                <td>
+                    <button class="delete" href="JavaScript:void(0);"><i class="glyphicon glyphicon-trash"></i>Eliminar</button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(document).ready(function () {
+                $("#txtBusquedaFacturas").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#tbodyFacturas tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+
+            $(document).ready(function () {
+                $('#btnCrear').on('click', function () {
+                    $.ajax({
+                        url: '/Facturas/FacturaCrear',
+                        data: {
+                            ClienteId: $('#slcClientes option:selected').val(),
+                            TotalFactura: 0,
+                            Pago: false
+                        },
+                        success: function (data) {
+                            $('.result').html(data);
+                        },
+                        error: function () {
+                            alert('Error' + error);
+                        }
+                    })
+                    location.reload();
+                });
+            });
+
+            $("#tblFacturas").on("click", ".show", function (e) {
+                var currentRow = $(this).closest("tr");
+                var FacturaId = currentRow.find("td:eq(0)").html();
+                var ClienteId = currentRow.find("td:eq(1)").html();
+                $.ajax({
+                    url: '/Home/Lineasdetalle',
+                    data: {
+                        FacturaId: FacturaId,
+                        ClienteId: ClienteId
+                    },
+                    success: function (data) {
+                        $('.result').html(data);
+                    },
+                    error: function () {
+                        alert('Error' + error);
+                    }
+                });
+
+                $('#btnCrear').hide();
+                $('#btnActualizar').show();
+                window.location.href = "Lineasdetalle/?FacturaId=" + FacturaId + "&ClienteId=" + ClienteId;
+            });
+
+            $("#tblFacturas").on("click", ".delete", function (e) {
+                if (confirm("¿Está seguro de eliminar este registro? Se borrará la factura junto con la o las líneas de detalle correspondiente.")) {
+                    $(this).closest('tr').remove();
+                    var currentRow = $(this).closest("tr");
+                    var FacturaId = currentRow.find("td:eq(0)").html();
+
+                    $.ajax({
+                        url: '/Facturas/FacturaEliminar',
+                        data: {
+                            FacturaId: FacturaId
+                        },
+                        success: function (data) {
+                            $('.result').html(data);
+                        },
+                        error: function () {
+                            alert('Error' + error);
+                        }
+                    });
+                } else {
+                    e.preventDefault();
+                }
+            });
+        });
+
+        function Clear() {
+            $("#txtFacturaId").val("");
+            $("#txtClienteId").val("");
+            $("#txtConsecutivo").val("");
+            $("#txtTotalFactura").val("");
+            $("#txtPago").val("");
+            $("#hfRowIndex").val("");
+        }
+    </script>
+</body>
+</html>

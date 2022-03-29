@@ -1,0 +1,197 @@
+﻿@{
+    ViewBag.Title = "Mantenimiento de clientes";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <input type="hidden" id="hfRowIndex" value="" />
+    <table class="table">
+        <tr hidden>
+            <td>ClienteId</td>
+            <td>
+                <input type="text" name="ClienteId" id="txtClienteId" value="" />
+            </td>
+        </tr>
+        <tr>
+            <td>Código</td>
+            <td>
+                <input type="number" name="Código" id="txtCodigo" value="" />
+            </td>
+        </tr>
+        <tr>
+            <td>Identificación</td>
+            <td>
+                <input type="number" name="Identificación" id="txtIdentificacion" value="" />
+            </td>
+        </tr>
+        <tr>
+            <td>Nombre</td>
+            <td>
+                <input type="text" name="Nombre" id="txtNombre" value="" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type='button' id='btnCrear'>Crear</button>
+                <button type='button' id='btnActualizar' style="display: none;">Actualizar</button>
+            </td>
+            <td>
+                <button type='button' id='btnLimpiar'>Limpiar</button>
+            </td>
+        </tr>
+    </table>
+
+    <input id="txtBusquedaClientes" type="text" placeholder="Buscar..">
+    <table id="tblClientes" class="table">
+        <thead>
+            <tr>
+                <th hidden>ClienteId</th>
+                <th>Código</th>
+                <th>Identificación</th>
+                <th>Nombre</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="tbodyClientes">
+            @for (int i = 0; i < ViewBag.Conteo; i++)
+            {
+                <tr>
+                    <td hidden>@Html.Raw(ViewBag.Datos[i].ClienteId)</td>
+                    <td>@Html.Raw(ViewBag.Datos[i].Codigo)</td>
+                    <td>@Html.Raw(ViewBag.Datos[i].Identificacion)</td>
+                    <td>@Html.Raw(ViewBag.Datos[i].Nombre)</td>
+                    <td>
+                        <button class="edit" href="JavaScript:void(0);"><i class="glyphicon glyphicon-edit"></i>Editar</button>
+                    </td>
+                    <td>
+                        <button class="delete" href="JavaScript:void(0);"><i class="glyphicon glyphicon-trash"></i>Eliminar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#btnCrear').on('click', function () {
+                var Codigo, Identificacion, Nombre;
+                Codigo = $("#txtCodigo").val();
+                Identificacion = $("#txtIdentificacion").val();
+                Nombre = $("#txtNombre").val();
+                if (Codigo < 1 || Identificacion < 1) {
+                    alert("El código ni la identificación pueden ser 0 o negativo.")
+                } else {
+                    $.ajax({
+                        url: '/Clientes/ClienteCrear',
+                        data: {
+                            Codigo: Codigo,
+                            Identificacion: Identificacion,
+                            Nombre: Nombre
+                        },
+                        success: function (data) {
+                            $('.result').html(data);
+                        },
+                        error: function () {
+                            alert('Error' + error);
+                        }
+                    })
+                    Codigo = $("#txtCodigo").val("");
+                    Identificacion = $("#txtIdentificacion").val("");
+                    Nombre = $("#txtNombre").val("");
+                    Clear();
+                    location.reload();
+                }
+            });
+
+            $('#btnActualizar').on('click', function () {
+                var ClienteId, Codigo, Identificacion, Nombre;
+                ClienteId = $("#txtClienteId").val();
+                Codigo = $("#txtCodigo").val();
+                Identificacion = $("#txtIdentificacion").val();
+                Nombre = $("#txtNombre").val();
+                if (Codigo < 1 || Identificacion < 1) {
+                    alert("El código ni la identificación pueden ser 0 o negativo.")
+                } else {
+                    $.ajax({
+                        url: '/Clientes/ClienteActualizar',
+                        data: {
+                            ClienteId: ClienteId,
+                            Codigo: Codigo,
+                            Identificacion: Identificacion,
+                            Nombre: Nombre
+                        },
+                        success: function (data) {
+                            $('.result').html(data);
+                        },
+                        error: function () {
+                            alert('Error' + error);
+                        }
+                    })
+                }
+                $('#tblClientes tbody tr').eq($('#hfRowIndex').val()).find('td').eq(0).html(ClienteId);
+                $('#tblClientes tbody tr').eq($('#hfRowIndex').val()).find('td').eq(1).html(Codigo);
+                $('#tblClientes tbody tr').eq($('#hfRowIndex').val()).find('td').eq(2).html(Identificacion)
+                $('#tblClientes tbody tr').eq($('#hfRowIndex').val()).find('td').eq(3).html(Nombre)
+                $('#btnCrear').show();
+                $('#btnActualizar').hide();
+                Clear();
+                location.reload();
+            });
+
+            $("#tblClientes").on("click", ".delete", function (e) {
+                if (confirm("¿Está seguro de eliminar este registro?")) {
+                    $(this).closest('tr').remove();
+                    var currentRow = $(this).closest("tr");
+                    var ClienteId = currentRow.find("td:eq(0)").html();
+                    $.ajax({
+                        url: '/Clientes/ClienteEliminar',
+                        data: {
+                            ClienteId: ClienteId
+                        },
+                        success: function (data) {
+                            $('.result').html(data);
+                        },
+                        error: function () {
+                            alert('Error' + error);
+                        }
+                    });
+                } else {
+                    e.preventDefault();
+                }
+            });
+
+            $('#btnLimpiar').on('click', function () {
+                Clear();
+            });
+
+            $("#tblClientes").on("click", ".edit", function (e) {
+                var row = $(this).closest('tr');
+                $('#hfRowIndex').val($(row).index());
+                var td = $(row).find("td");
+                $('#txtClienteId').val($(td).eq(0).html());
+                $('#txtCodigo').val($(td).eq(1).html());
+                $('#txtIdentificacion').val($(td).eq(2).html());
+                $('#txtNombre').val($(td).eq(3).html());
+                $('#btnCrear').hide();
+                $('#btnActualizar').show();
+            });
+        });
+
+        function Clear() {
+            $("#txtClienteId").val("");
+            $("#txtCodigo").val("");
+            $("#txtIdentificacion").val("");
+            $("#txtNombre").val("");
+            $("#hfRowIndex").val("");
+        }
+    </script>
+</body>
+</html>

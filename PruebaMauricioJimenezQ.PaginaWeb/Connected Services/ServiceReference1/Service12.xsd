@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:53354/Service1.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/PruebaMauricioJimenezQ.Entidades" />
+  <xs:element name="RegistrarCliente">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Codigo" type="xs:int" />
+        <xs:element minOccurs="0" name="Identificacion" type="xs:int" />
+        <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegistrarClienteResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarCliente">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ClienteId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Codigo" type="xs:int" />
+        <xs:element minOccurs="0" name="Identificacion" type="xs:int" />
+        <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarClienteResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerClienteOClientes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ClienteId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerClienteOClientesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/PruebaMauricioJimenezQ.Entidades" minOccurs="0" name="ObtenerClienteOClientesResult" nillable="true" type="q1:ArrayOfETCliente" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EliminarCliente">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ClienteId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EliminarClienteResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegistrarArticulo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Codigo" type="xs:int" />
+        <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Precio" type="xs:decimal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegistrarArticuloResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarArticulo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ArticuloId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Codigo" type="xs:int" />
+        <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Precio" type="xs:decimal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarArticuloResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerArticuloOArticulos">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ArticuloId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerArticuloOArticulosResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/PruebaMauricioJimenezQ.Entidades" minOccurs="0" name="ObtenerArticuloOArticulosResult" nillable="true" type="q2:ArrayOfETArticulo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EliminarArticulo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ArticuloId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EliminarArticuloResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegistrarFactura">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ClienteId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="TotalFactura" type="xs:decimal" />
+        <xs:element minOccurs="0" name="Pago" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegistrarFacturaResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarFactura">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FacturaId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ClienteId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="TotalFactura" type="xs:decimal" />
+        <xs:element minOccurs="0" name="Pago" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarFacturaResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerFacturaOFacturas">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FacturaId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ClienteId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerFacturaOFacturasResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/PruebaMauricioJimenezQ.Entidades" minOccurs="0" name="ObtenerFacturaOFacturasResult" nillable="true" type="q3:ArrayOfETFactura" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EliminarFactura">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FacturaId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EliminarFacturaResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegistrarLineadetalle">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FacturaId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ArticuloId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="PrecioUnitario" type="xs:decimal" />
+        <xs:element minOccurs="0" name="Cantidad" type="xs:int" />
+        <xs:element minOccurs="0" name="TotalLinea" type="xs:decimal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegistrarLineadetalleResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarLineadetalle">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="LineaDetalleId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="FacturaId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ArticuloId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="PrecioUnitario" type="xs:decimal" />
+        <xs:element minOccurs="0" name="Cantidad" type="xs:int" />
+        <xs:element minOccurs="0" name="TotalLinea" type="xs:decimal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarLineadetalleResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerLineadetalleOLineadetalles">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FacturaId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerLineadetalleOLineadetallesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/PruebaMauricioJimenezQ.Entidades" minOccurs="0" name="ObtenerLineadetalleOLineadetallesResult" nillable="true" type="q4:ArrayOfETLineadetalle" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EliminarLineadetalle">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="LineadetalleId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EliminarLineadetalleResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

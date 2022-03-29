@@ -1,0 +1,205 @@
+﻿@{
+    ViewBag.Title = "Mantenimiento de artículos";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <input type="hidden" id="hfRowIndex" value="" />
+    <table class="table">
+        <tr hidden>
+            <td>ArticuloId</td>
+            <td>
+                <input type="text" name="ArticuloId" id="txtArticuloId" value="" />
+            </td>
+        </tr>
+        <tr>
+            <td>Código</td>
+            <td>
+                <input type="number" name="Código" id="txtCodigo" value="" />
+            </td>
+        </tr>
+        <tr>
+            <td>Nombre</td>
+            <td>
+                <input type="text" name="Nombre" id="txtNombre" value="" />
+            </td>
+        </tr>
+        <tr>
+            <td>Precio ₡</td>
+            <td>
+                <input type="number" name="Precio" id="txtPrecio" value="" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type='button' id='btnCrear'>Crear</button>
+                <button type='button' id='btnActualizar' style="display: none;">Actualizar</button>
+            </td>
+            <td>
+                <button type='button' id='btnLimpiar'>Limpiar</button>
+            </td>
+        </tr>
+    </table>
+
+    <input id="txtBusquedaArticulos" type="text" placeholder="Buscar..">
+    <table id="tblArticulos" class="table" >
+        <thead>
+            <tr>
+                <th hidden>ArticuloId</th>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Precio ₡</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="tbodyArticulos">
+            @for (int i = 0; i < ViewBag.Conteo; i++)
+            {
+                <tr>
+                    <td hidden>@Html.Raw(ViewBag.Datos[i].ArticuloId)</td>
+                    <td>@Html.Raw(ViewBag.Datos[i].Codigo)</td>
+                    <td>@Html.Raw(ViewBag.Datos[i].Nombre)</td>
+                    <td>@Html.Raw(ViewBag.Datos[i].Precio)</td>
+                    <td>
+                        <button class="edit" href="JavaScript:void(0);"><i class="glyphicon glyphicon-edit"></i>Editar</button>
+                    </td>
+                    <td>
+                        <button class="delete" href="JavaScript:void(0);"><i class="glyphicon glyphicon-trash"></i>Eliminar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(document).ready(function () {
+                $("#txtBusquedaArticulos").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#tbodyArticulos tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+
+            $('#btnCrear').on('click', function () {
+                var Codigo, Nombre, Precio;
+                Codigo = $("#txtCodigo").val();
+                Nombre = $("#txtNombre").val();
+                Precio = $("#txtPrecio").val();
+                if (Codigo < 1 || Precio < 1) {
+                    alert("El código ni el precio pueden ser 0 o negativo.")
+                } else {
+                    $.ajax({
+                        url: '/Articulos/ArticuloCrear',
+                        data: {
+                            Codigo: Codigo,
+                            Nombre: Nombre,
+                            Precio: Precio
+                        },
+                        success: function (data) {
+                            $('.result').html(data);
+                        },
+                        error: function () {
+                            alert('Error' + error);
+                        }
+                    })
+                    Codigo = $("#txtCodigo").val("");
+                    Identificacion = $("#txtNombre").val("");
+                    Nombre = $("#txtPrecio").val("");
+                    Clear();
+                    location.reload();
+                }
+            });
+
+            $('#btnActualizar').on('click', function () {
+                var ArticuloId, Codigo, Nombre, Precio;
+                ArticuloId = $("#txtArticuloId").val();
+                Codigo = $("#txtCodigo").val();
+                Nombre = $("#txtNombre").val();
+                Precio = $("#txtPrecio").val();
+                if (Codigo < 1 || Precio < 1) {
+                    alert("El código ni el precio pueden ser 0 o negativo.")
+                } else {
+                    $.ajax({
+                        url: '/Articulos/ArticuloActualizar',
+                        data: {
+                            ArticuloId: ArticuloId,
+                            Codigo: Codigo,
+                            Nombre: Nombre,
+                            Precio: Precio
+                        },
+                        success: function (data) {
+                            $('.result').html(data);
+                        },
+                        error: function () {
+                            alert('Error' + error);
+                        },
+                    })
+                    $('#tblArticulos tbody tr').eq($('#hfRowIndex').val()).find('td').eq(0).html(ArticuloId);
+                    $('#tblArticulos tbody tr').eq($('#hfRowIndex').val()).find('td').eq(1).html(Codigo);
+                    $('#tblArticulos tbody tr').eq($('#hfRowIndex').val()).find('td').eq(2).html(Nombre)
+                    $('#tblArticulos tbody tr').eq($('#hfRowIndex').val()).find('td').eq(3).html(Precio)
+                    $('#btnCrear').show();
+                    $('#btnActualizar').hide();
+                    Clear();
+                    location.reload();
+                }
+            });
+
+            $("#tblArticulos").on("click", ".delete", function (e) {
+                if (confirm("¿Está seguro de eliminar este registro?")) {
+                    $(this).closest('tr').remove();
+                    var currentRow = $(this).closest("tr");
+                    var ArticuloId = currentRow.find("td:eq(0)").html();
+                    $.ajax({
+                        url: '/Articulos/ArticuloEliminar',
+                        data: {
+                            ArticuloId: ArticuloId
+                        },
+                        success: function (data) {
+                            $('.result').html(data);
+                        },
+                        error: function () {
+                            alert('Error' + error);
+                        }
+                    });
+                } else {
+                    e.preventDefault();
+                }
+            });
+
+            $('#btnLimpiar').on('click', function () {
+                Clear();
+            });
+
+            $("#tblArticulos").on("click", ".edit", function (e) {
+                var row = $(this).closest('tr');
+                $('#hfRowIndex').val($(row).index());
+                var td = $(row).find("td");
+                $('#txtArticuloId').val($(td).eq(0).html());
+                $('#txtCodigo').val($(td).eq(1).html());
+                $('#txtNombre').val($(td).eq(2).html());
+                $('#txtPrecio').val($(td).eq(3).html());
+                $('#btnCrear').hide();
+                $('#btnActualizar').show();
+            });
+        });
+
+        function Clear() {
+            $("#txtArticuloId").val("");
+            $("#txtCodigo").val("");
+            $("#txtNombre").val("");
+            $("#txtPrecio").val("");
+            $("#hfRowIndex").val("");
+        }
+    </script>
+</body>
+</html>

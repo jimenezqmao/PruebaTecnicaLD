@@ -1,0 +1,247 @@
+﻿@{
+    ViewBag.Title = "Líneas de detalle";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <input type="hidden" id="hfRowIndex" value="" />
+
+    <br><h3>Encabezado de la factura</h3>
+    <table class="table">
+        <tr hidden>
+            <td>ClienteId</td>
+            <td>@Html.Raw(ViewBag.DatosCliente[0].ClienteId)</td>
+        </tr>
+        <tr>
+            <td>Código del cliente</td>
+            <td>@Html.Raw(ViewBag.DatosCliente[0].Codigo)</td>
+        </tr>
+        <tr>
+            <td>Identificación del cliente</td>
+            <td>@Html.Raw(ViewBag.DatosCliente[0].Identificacion)</td>
+        </tr>
+        <tr>
+            <td>Nombre del cliente</td>
+            <td>@Html.Raw(ViewBag.DatosCliente[0].Nombre)</td>
+        </tr>
+        <tr hidden>
+            <td>FacturaId</td>
+            <td>@Html.Raw(ViewBag.DatosFactura[0].FacturaId)</td>
+        </tr>
+        <tr hidden>
+            <td>ClienteId</td>
+            <td>@Html.Raw(ViewBag.DatosFactura[0].ClienteId)</td>
+        </tr>
+        <tr>
+            <td>Consecutivo de la factura</td>
+            <td>@Html.Raw(ViewBag.DatosFactura[0].Consecutivo)</td>
+        </tr>
+        <tr>
+            <td>Factura pagada</td>
+            <td>@Html.Raw(ViewBag.DatosFactura[0].Pago)</td>
+        </tr>
+        <tr></tr>
+    </table>
+
+    <h3>Para agregar una línea de detalle, primero elija un artículo:</h3>
+    <table class="table">
+        <tr>
+            <td>
+                Detalles del artículo
+                <select id="slcArticulos">
+                    <option disabled selected> -- Seleccione un artículo -- </option>
+                    @for (int i = 0; i < ViewBag.ConteoArticulo; i++)
+                    {
+                        <option value="@Html.Raw(ViewBag.DatosArticulo[i].ArticuloId)|@Html.Raw(ViewBag.DatosArticulo[i].Codigo)|@Html.Raw(ViewBag.DatosArticulo[i].Precio)">Código @Html.Raw(ViewBag.DatosArticulo[i].Codigo). @Html.Raw(ViewBag.DatosArticulo[i].Nombre). ₡@Html.Raw(ViewBag.DatosArticulo[i].Precio)</option>
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Precio unitario ₡
+                <input type="number" name="PrecioUnitario" id="txtPrecioUnitario" value="" readonly/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Cantidad            
+                <input type="number" name="Cantidad" id="txtCantidad" value="" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Total de la línea ₡
+                <input type="number" name="txtTotalLinea" id="txtTotalLinea" value="" readonly/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type='button' id='btnAgregar'>Agregar</button>
+            </td>
+        </tr>
+    </table>
+
+    <h3>Líneas de detalle de la factura</h3>
+    <table id="tblLineasdetalle" class="table">
+        <thead>
+            <tr>
+                <th hidden>LineadetalleId</th>
+                <th hidden>FacturaId</th>
+                <th hidden>ArticuloId</th>
+                <th>NombreArticulo</th>
+                <th>Precio unitario ₡</th>
+                <th>Cantidad</th>
+                <th>Total de la línea ₡</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < ViewBag.Conteo; i++)
+            {
+            <tr>
+                <td hidden>@Html.Raw(ViewBag.DatosLineasDetalle[i].LineadetalleId)</td>
+                <td hidden>@Html.Raw(ViewBag.DatosLineasDetalle[i].FacturaId)</td>
+                <td hidden>@Html.Raw(ViewBag.DatosLineasDetalle[i].ArticuloId)</td>
+                <td>@Html.Raw(ViewBag.DatosLineasDetalle[i].NombreArticulo)</td>
+                <td>@Html.Raw(ViewBag.DatosLineasDetalle[i].PrecioUnitario)</td>
+                <td>@Html.Raw(ViewBag.DatosLineasDetalle[i].Cantidad)</td>
+                <td>@Html.Raw(ViewBag.DatosLineasDetalle[i].TotalLinea)</td>
+                <td>
+                    <button class="delete" href="JavaScript:void(0);"><i class="glyphicon glyphicon-trash"></i>Eliminar</button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <h3 id="H3Precio"></h3>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var FacturaId, ClienteId, ArticuloId, PrecioUnitario = 0, Cantidad, TotalLinea = 0, ArregloArticulo, TotalFactura = 0;
+
+            $("#slcArticulos").change(function () {
+                Clear();
+                ArregloArticulo = ($('#slcArticulos option:selected').val()).split("|");
+                $("#txtPrecioUnitario").val(ArregloArticulo[2]);
+            });
+
+            $("#txtCantidad").change(function () {
+                PrecioUnitario = $("#txtPrecioUnitario").val();
+                Cantidad = $("#txtCantidad").val();
+                if (PrecioUnitario < 1 || Cantidad < 1) {
+                    alert("Seleccione un artículo para que el precio se cargue. Posterior, establezca la cantidad igual o mayor a 1.", PrecioUnitario, " ", Cantidad)
+                } else {
+                    $("#txtTotalLinea").val((PrecioUnitario * Cantidad));
+                }
+            });
+
+            $('#btnAgregar').on('click', function () {
+                ArregloArticulo = ($('#slcArticulos option:selected').val()).split("|");
+                FacturaId = "@Html.Raw(ViewBag.DatosFactura[0].FacturaId)";
+                ClienteId = "@Html.Raw(ViewBag.DatosFactura[0].ClienteId)";
+                ArticuloId = ArregloArticulo[0];
+                PrecioUnitario = $("#txtPrecioUnitario").val();
+                Cantidad = $("#txtCantidad").val();
+                TotalLinea = $("#txtTotalLinea").val();
+                if (PrecioUnitario == "" || Cantidad == "" || TotalLinea == "") {
+                    alert("No se puede agregar una línea de detalle nueva sin antes seleccionar un artículo, junto con su respectivo precio, cantidad y total de la línea.")
+                } else {
+                    $.ajax({
+                        url: '/Lineasdetalle/LineadetalleCrear',
+                        data: {
+                            FacturaId: FacturaId,
+                            ArticuloId: ArticuloId,
+                            PrecioUnitario: PrecioUnitario,
+                            Cantidad: Cantidad,
+                            TotalLinea: TotalLinea
+                        },
+                        success: function (data) {
+                            $('.result').html(data);
+                        },
+                        error: function () {
+                            alert('Error' + error);
+                        }
+                    });
+                    Codigo = $("#txtCodigo").val("");
+                    Identificacion = $("#txtIdentificacion").val("");
+                    Nombre = $("#txtNombre").val("");
+                    Clear();
+                    location.reload();
+                }
+            });
+
+            $("#tblLineasdetalle").on("click", ".delete", function (e) {
+                if (confirm("¿Está seguro de eliminar este registro?")) {
+                    $(this).closest('tr').remove();
+                    var currentRow = $(this).closest("tr");
+                    var LineaDetalleId = currentRow.find("td:eq(0)").html();
+                    $.ajax({
+                        url: '/Lineasdetalle/LineadetalleEliminar',
+                        data: {
+                            LineaDetalleId: LineaDetalleId
+                        },
+                        success: function (data) {
+                            $('.result').html(data);
+                        },
+                        error: function () {
+                            alert('Error' + error);
+                        }
+                    });
+                } else {
+                    e.preventDefault();
+                }
+                location.reload();
+            });
+
+            $('#btnLimpiar').on('click', function () {
+                Clear();
+            });
+
+            $('table tr').each(function () {
+                ArregloArticulo = ($('#slcArticulos option:selected').val()).split("|");
+                FacturaId = "@Html.Raw(ViewBag.DatosFactura[0].FacturaId)";
+                ClienteId = "@Html.Raw(ViewBag.DatosFactura[0].ClienteId)";
+                var PrecioLineadetalle = parseInt($('td', this).eq(6).text());
+                if (!isNaN(PrecioLineadetalle)) {
+                    TotalFactura += PrecioLineadetalle;
+                    $.ajax({
+                    url: '/Facturas/FacturaActualizar',
+                    data: {
+                        FacturaId: FacturaId,
+                        ClienteId: ClienteId,
+                        TotalFactura: TotalFactura,
+                        Pago: true
+                    },
+                    success: function (data) {
+                        $('.result').html(data);
+                    },
+                    error: function () {
+                        alert('Error' + error);
+                    }
+                });
+                }
+                
+            });
+            H3Precio.innerText = "Total de la factura: ₡" + TotalFactura;
+        });
+
+        function Clear() {
+            $("#txtPrecioUnitario").val("");
+            $("#txtCantidad").val("");
+            $("#txtTotalLinea").val("");
+            $("#hfRowIndex").val("");
+        }
+    </script>
+</body>
+</html>
+
+

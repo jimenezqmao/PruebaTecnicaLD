@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Service1" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:53354/Service1.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:53354/Service1.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:53354/Service1.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/PruebaMauricioJimenezQ.Entidades" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IService1_RegistrarCliente_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegistrarCliente" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RegistrarCliente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegistrarClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ActualizarCliente_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCliente" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ActualizarCliente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ObtenerClienteOClientes_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerClienteOClientes" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ObtenerClienteOClientes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerClienteOClientesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_EliminarCliente_InputMessage">
+    <wsdl:part name="parameters" element="tns:EliminarCliente" />
+  </wsdl:message>
+  <wsdl:message name="IService1_EliminarCliente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EliminarClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RegistrarArticulo_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegistrarArticulo" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RegistrarArticulo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegistrarArticuloResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ActualizarArticulo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarArticulo" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ActualizarArticulo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarArticuloResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ObtenerArticuloOArticulos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerArticuloOArticulos" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ObtenerArticuloOArticulos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerArticuloOArticulosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_EliminarArticulo_InputMessage">
+    <wsdl:part name="parameters" element="tns:EliminarArticulo" />
+  </wsdl:message>
+  <wsdl:message name="IService1_EliminarArticulo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EliminarArticuloResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RegistrarFactura_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegistrarFactura" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RegistrarFactura_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegistrarFacturaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ActualizarFactura_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarFactura" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ActualizarFactura_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarFacturaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ObtenerFacturaOFacturas_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerFacturaOFacturas" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ObtenerFacturaOFacturas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerFacturaOFacturasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_EliminarFactura_InputMessage">
+    <wsdl:part name="parameters" element="tns:EliminarFactura" />
+  </wsdl:message>
+  <wsdl:message name="IService1_EliminarFactura_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EliminarFacturaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RegistrarLineadetalle_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegistrarLineadetalle" />
+  </wsdl:message>
+  <wsdl:message name="IService1_RegistrarLineadetalle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegistrarLineadetalleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ActualizarLineadetalle_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarLineadetalle" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ActualizarLineadetalle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarLineadetalleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ObtenerLineadetalleOLineadetalles_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerLineadetalleOLineadetalles" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ObtenerLineadetalleOLineadetalles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerLineadetalleOLineadetallesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_EliminarLineadetalle_InputMessage">
+    <wsdl:part name="parameters" element="tns:EliminarLineadetalle" />
+  </wsdl:message>
+  <wsdl:message name="IService1_EliminarLineadetalle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EliminarLineadetalleResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IService1">
+    <wsdl:operation name="RegistrarCliente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/RegistrarCliente" message="tns:IService1_RegistrarCliente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/RegistrarClienteResponse" message="tns:IService1_RegistrarCliente_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCliente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ActualizarCliente" message="tns:IService1_ActualizarCliente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ActualizarClienteResponse" message="tns:IService1_ActualizarCliente_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerClienteOClientes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ObtenerClienteOClientes" message="tns:IService1_ObtenerClienteOClientes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ObtenerClienteOClientesResponse" message="tns:IService1_ObtenerClienteOClientes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EliminarCliente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/EliminarCliente" message="tns:IService1_EliminarCliente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/EliminarClienteResponse" message="tns:IService1_EliminarCliente_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegistrarArticulo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/RegistrarArticulo" message="tns:IService1_RegistrarArticulo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/RegistrarArticuloResponse" message="tns:IService1_RegistrarArticulo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarArticulo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ActualizarArticulo" message="tns:IService1_ActualizarArticulo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ActualizarArticuloResponse" message="tns:IService1_ActualizarArticulo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArticuloOArticulos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ObtenerArticuloOArticulos" message="tns:IService1_ObtenerArticuloOArticulos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ObtenerArticuloOArticulosResponse" message="tns:IService1_ObtenerArticuloOArticulos_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EliminarArticulo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/EliminarArticulo" message="tns:IService1_EliminarArticulo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/EliminarArticuloResponse" message="tns:IService1_EliminarArticulo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegistrarFactura">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/RegistrarFactura" message="tns:IService1_RegistrarFactura_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/RegistrarFacturaResponse" message="tns:IService1_RegistrarFactura_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarFactura">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ActualizarFactura" message="tns:IService1_ActualizarFactura_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ActualizarFacturaResponse" message="tns:IService1_ActualizarFactura_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerFacturaOFacturas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ObtenerFacturaOFacturas" message="tns:IService1_ObtenerFacturaOFacturas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ObtenerFacturaOFacturasResponse" message="tns:IService1_ObtenerFacturaOFacturas_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EliminarFactura">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/EliminarFactura" message="tns:IService1_EliminarFactura_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/EliminarFacturaResponse" message="tns:IService1_EliminarFactura_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegistrarLineadetalle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/RegistrarLineadetalle" message="tns:IService1_RegistrarLineadetalle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/RegistrarLineadetalleResponse" message="tns:IService1_RegistrarLineadetalle_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarLineadetalle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ActualizarLineadetalle" message="tns:IService1_ActualizarLineadetalle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ActualizarLineadetalleResponse" message="tns:IService1_ActualizarLineadetalle_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerLineadetalleOLineadetalles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ObtenerLineadetalleOLineadetalles" message="tns:IService1_ObtenerLineadetalleOLineadetalles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ObtenerLineadetalleOLineadetallesResponse" message="tns:IService1_ObtenerLineadetalleOLineadetalles_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EliminarLineadetalle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/EliminarLineadetalle" message="tns:IService1_EliminarLineadetalle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/EliminarLineadetalleResponse" message="tns:IService1_EliminarLineadetalle_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IService1" type="tns:IService1">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="RegistrarCliente">
+      <soap:operation soapAction="http://tempuri.org/IService1/RegistrarCliente" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCliente">
+      <soap:operation soapAction="http://tempuri.org/IService1/ActualizarCliente" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerClienteOClientes">
+      <soap:operation soapAction="http://tempuri.org/IService1/ObtenerClienteOClientes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EliminarCliente">
+      <soap:operation soapAction="http://tempuri.org/IService1/EliminarCliente" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegistrarArticulo">
+      <soap:operation soapAction="http://tempuri.org/IService1/RegistrarArticulo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarArticulo">
+      <soap:operation soapAction="http://tempuri.org/IService1/ActualizarArticulo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArticuloOArticulos">
+      <soap:operation soapAction="http://tempuri.org/IService1/ObtenerArticuloOArticulos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EliminarArticulo">
+      <soap:operation soapAction="http://tempuri.org/IService1/EliminarArticulo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegistrarFactura">
+      <soap:operation soapAction="http://tempuri.org/IService1/RegistrarFactura" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarFactura">
+      <soap:operation soapAction="http://tempuri.org/IService1/ActualizarFactura" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerFacturaOFacturas">
+      <soap:operation soapAction="http://tempuri.org/IService1/ObtenerFacturaOFacturas" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EliminarFactura">
+      <soap:operation soapAction="http://tempuri.org/IService1/EliminarFactura" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegistrarLineadetalle">
+      <soap:operation soapAction="http://tempuri.org/IService1/RegistrarLineadetalle" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarLineadetalle">
+      <soap:operation soapAction="http://tempuri.org/IService1/ActualizarLineadetalle" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerLineadetalleOLineadetalles">
+      <soap:operation soapAction="http://tempuri.org/IService1/ObtenerLineadetalleOLineadetalles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EliminarLineadetalle">
+      <soap:operation soapAction="http://tempuri.org/IService1/EliminarLineadetalle" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service1">
+    <wsdl:port name="BasicHttpBinding_IService1" binding="tns:BasicHttpBinding_IService1">
+      <soap:address location="http://localhost:53354/Service1.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
